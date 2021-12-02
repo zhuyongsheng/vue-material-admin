@@ -1,12 +1,16 @@
 <template>
-  <v-app-bar color="primary" dark app>
+  <v-app-bar clipped-left color="primary" dark app>
     <v-app-bar-nav-icon @click="handleDrawerToggle" />
+    <v-toolbar color="primary darken" flat dark>
+      <img :src="computeLogo" height="36" alt="Vue Material Admin Template" />
+      <v-toolbar-title>
+        <span class="hidden-sm-and-down">Vue Material</span>
+      </v-toolbar-title>
+    </v-toolbar>
     <v-spacer />
     <v-toolbar-items>
-      <v-btn text href="mailto:wangqiangshen@gmail.com">Hire Me</v-btn>
-      <v-btn text href="https://www.isocked.com" target="_blank">Blog</v-btn>
-      <v-btn text href="http://doc.isocked.com/">Doc</v-btn>
-      <v-btn icon href="https://github.com/tookit/vue-material-admin">
+      <v-btn text href="https://vuetifyjs.com/zh-Hans/components/alerts/" target="_blank">Doc</v-btn>
+      <v-btn icon href="https://github.com/zhuyongsheng/vue-material-admin" target="_blank">
         <v-icon>mdi-github</v-icon>
       </v-btn>
       <v-btn icon @click="handleFullScreen()">
@@ -52,14 +56,14 @@
         </v-list>
       </v-menu>
     </v-toolbar-items>
-    <v-toolbar v-if="extended" slot="extension" tag="div" dense color="white" light>
-      <v-icon>mdi-home</v-icon>
-      <v-breadcrumbs :items="breadcrumbs" class="pa-3" />
-      <v-spacer></v-spacer>
-      <v-btn icon small color="black">
-        <v-icon @click="handleGoBack" v-text="'mdi-arrow-left'" />
-      </v-btn>
-    </v-toolbar>
+<!--    <v-toolbar v-if="extended" slot="extension" tag="div" dense color="white" light>-->
+<!--      <v-icon>mdi-home</v-icon>-->
+<!--      <v-breadcrumbs :items="breadcrumbs" class="pa-3" />-->
+<!--      <v-spacer></v-spacer>-->
+<!--      <v-btn icon small color="black">-->
+<!--        <v-icon @click="handleGoBack" v-text="'mdi-arrow-left'" />-->
+<!--      </v-btn>-->
+<!--    </v-toolbar>-->
   </v-app-bar>
 </template>
 <script>
@@ -100,10 +104,14 @@ export default {
           click: this.handleLogut,
         },
       ],
+      rightDrawer: false,
     }
   },
   computed: {
     ...mapGetters(['getAvatar', 'getUsername', 'getNotification']),
+    computeLogo() {
+      return '/static/m.png'
+    },
     breadcrumbs() {
       const { matched } = this.$route
       return matched.map((route, index) => {
@@ -136,8 +144,9 @@ export default {
         this.$router.push('/auth/login')
       }
     },
-
-    handleSetting() {},
+    handleSetting() {
+      this.$emit('theme-setting-click')
+    },
     handleProfile() {},
     handleGoBack() {
       this.$router.go(-1)

@@ -1,12 +1,11 @@
 <template>
-  <div class="themeSetting">
+  <v-navigation-drawer v-model="rightDrawer" class="themeSetting" temporary right hide-overlay fixed>
     <v-toolbar color="primary">
       <v-toolbar-title class="white--text">Theme Settings</v-toolbar-title>
     </v-toolbar>
     <v-container>
       <v-row column>
         <v-col>
-
           <v-subheader class="px-1 my-2">Color Option</v-subheader>
           <div class="color-option">
             <v-item-group v-model="theme">
@@ -41,7 +40,7 @@
         </v-col>
       </v-row>
     </v-container>
-  </div>
+  </v-navigation-drawer>
 </template>
 <script>
 import colors from 'vuetify/es5/util/colors'
@@ -52,6 +51,7 @@ export default {
       locale: this._i18n.locale,
       sideBarOption: 'light',
       colors: colors,
+      rightDrawer: false,
     }
   },
   computed: {
@@ -111,6 +111,9 @@ export default {
       const color = this.colors[option.key].base
       this.$store.commit('setThemeColor', color)
       this.$vuetify.theme.themes.light.primary = color
+    },
+    toggleThemeSetting() {
+      this.rightDrawer = !this.rightDrawer
     },
   },
 }
